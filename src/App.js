@@ -1,31 +1,22 @@
-const today = new Date();
+import { Fragment } from "react";
 
-function formatDate(date) {
-	return new Intl.DateTimeFormat("en-Us", { weekday: "long" }).format(date);
-}
+const poem = {
+	lines: [
+		"I write, erase, rewrite",
+		"Erase again, and then",
+		"A poppy blooms.",
+	],
+};
 
-export default function App() {
-	const person = {
-		name: "Gregorio Y. Zara",
-		theme: {
-			backgroundColor: "black",
-			color: "pink",
-		},
-	};
-
+export default function Poem() {
 	return (
-		<div style={person.theme}>
-			<h1> {person.name}'s Todos </h1>
-			<img
-				className="avatar"
-				src="https://i.imgur.com/7vQD0fPs.jpg"
-				alt="Gregorio Y. Zara"
-			/>
-			<ul>
-				<li>Improve the videophone</li>
-				<li>Prepare aeronautics lectures</li>
-				<li>Work on the alcohol-fuelled engine</li>
-			</ul>
-		</div>
+		<article>
+			{poem.lines.map((line, index) => (
+				<Fragment key={index}>
+					<p>{line}</p>
+					<hr />
+				</Fragment>
+			))}
+		</article>
 	);
 }
