@@ -1,22 +1,34 @@
-import { Fragment } from "react";
+import { useState } from "react";
+import { sculptureList } from "./data.js";
 
-const poem = {
-	lines: [
-		"I write, erase, rewrite",
-		"Erase again, and then",
-		"A poppy blooms.",
-	],
-};
+export default function Gallery() {
+	const [index, setIndex] = useState(0);
+	const [showMore, setShowMore] = useState(false);
 
-export default function Poem() {
+	function handleClick() {
+		setIndex(index + 1);
+	}
+
+	function handleMoreClick() {
+		setShowMore(!showMore);
+	}
+
+	let sculpture = sculptureList[index];
 	return (
-		<article>
-			{poem.lines.map((line, index) => (
-				<Fragment key={index}>
-					<p>{line}</p>
-					<hr />
-				</Fragment>
-			))}
-		</article>
+		<>
+			<button onClick={handleClick}>Next</button>
+			<h2>
+				<i>{sculpture.name} </i>
+				by {sculpture.artist}
+			</h2>
+			<h3>
+				({index + 1} of {sculptureList.length})
+			</h3>
+			<button onClick={handleMoreClick}>
+				{showMore ? "Hide" : "Show"} details
+			</button>
+			{showMore && <p>{sculpture.description}</p>}
+			<img src={sculpture.url} alt={sculpture.alt} />
+		</>
 	);
 }
