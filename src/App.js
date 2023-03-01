@@ -1,23 +1,25 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useState } from "react";
+import { useFormInput } from "./Components/useFormInput";
 
-function subscribe(callback) {
-	window.addEventListener("online", callback);
-	window.addEventListener("offline", callback);
+export default function Form() {
+	const firstName = useFormInput("Mary");
+	const lastName = useFormInput("Poppins");
 
-	return () => {
-		window.removeEventListener("online", callback);
-		window.removeEventListener("offline", callback);
-	};
-}
-
-export default function useOnlineStatus() {
-	return useSyncExternalStore(
-		subscribe,
-		() => navigator.onLine,
-		() => true
+	return (
+		<>
+			<label>
+				First Name:
+				<input {...firstName} />
+			</label>
+			<label>
+				Last Name:
+				<input {...lastName} />
+			</label>
+			<p>
+				<b>
+					Good morning, {firstName.value} {lastName.value}.
+				</b>
+			</p>
+		</>
 	);
-}
-
-function ChatIndicator() {
-	const isOnline = useOnlineStatus();
 }
