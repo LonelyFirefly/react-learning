@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { useFormInput } from "./Components/useFormInput";
+import useOnlineStatus from "./Components/useOnlineStatus.js";
 
-export default function Form() {
-	const firstName = useFormInput("Mary");
-	const lastName = useFormInput("Poppins");
+function StatusBar() {
+	const isOnline = useOnlineStatus();
+	return <h1> {isOnline ? "✅ Online" : "❌ Disconnected"} </h1>;
+}
 
+function SaveButton() {
+	const isOnline = useOnlineStatus();
+
+	function handleSaveClick() {
+		console.log("✅ Progress saved");
+	}
+
+	return <button>{isOnline ? "Save progress" : "Reconnecting..."}</button>;
+}
+
+export default function App() {
 	return (
 		<>
-			<label>
-				First Name:
-				<input {...firstName} />
-			</label>
-			<label>
-				Last Name:
-				<input {...lastName} />
-			</label>
-			<p>
-				<b>
-					Good morning, {firstName.value} {lastName.value}.
-				</b>
-			</p>
+			<SaveButton />
+			<StatusBar />
 		</>
 	);
 }
